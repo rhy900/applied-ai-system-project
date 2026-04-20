@@ -1,0 +1,27 @@
+flowchart TD
+    A["User Natural Language Input\n(e.g. 'I want chill study music')"] --> B
+
+    subgraph PLAN ["STEP 1 — PLAN (Gemini AI)"]
+        B["Parse intent into structured profile\ngenre / mood / energy / acoustic"] --> C["Guardrails validate output\nfalls back to safe defaults if invalid"]
+    end
+
+    C --> D
+
+    subgraph ACT ["STEP 2 — ACT (Scoring Engine)"]
+        D["Score all 20 songs against profile\ngenre +2.0 | mood +1.5 | energy proximity +1.0 | acoustic +0.5"] --> E["Sort by score → Top 5 candidates"]
+        E --> F["Open YouTube search for top pick\nin browser automatically"]
+    end
+
+    F --> G
+
+    subgraph CHECK ["STEP 3 — CHECK (Gemini AI)"]
+        G["Evaluate recommendation quality\nExplain pick, note runner-up, flag limitations"]
+    end
+
+    G --> H["Terminal Output + Browser Tab\nwith explanation and YouTube video"]
+
+    subgraph RELIABILITY ["Reliability Layer"]
+        I["Test Harness — 6 preset profiles\n6/6 pass"]
+        J["12 Unit Tests — scoring & guardrails\n12/12 pass"]
+        K["File Logger — logs/agent.log\nall steps recorded"]
+    end
